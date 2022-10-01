@@ -7,12 +7,14 @@
 
 import Foundation
 import RealityKit
+import ARKit
 
 struct ARModel {
     private(set) var arView : ARView
     
     init() {
         arView = ARView(frame: .zero)
+        arView.session.run(ARFaceTrackingConfiguration())
     }
     
 }
