@@ -11,7 +11,31 @@ import RealityKit
 struct ContentView : View {
     @ObservedObject var arViewModel : ARViewModel = ARViewModel()
     var body: some View {
-        ARViewContainer(arViewModel: arViewModel).edgesIgnoringSafeArea(.all)
+        ZStack {
+            ARViewContainer(arViewModel: arViewModel).edgesIgnoringSafeArea(.all)
+            VStack {
+                VStack {
+                    HStack {
+                        Text("Pizza")
+                            .font(.title)
+                            .bold()
+                            .foregroundColor(arViewModel.tiltLeft ? .green : .secondary)
+                        Spacer()
+                        Text("Ice Cream")
+                            .font(.title)
+                            .bold()
+                            .foregroundColor(arViewModel.tiltRight ? .green : .secondary)
+                    }
+                    Text("What's your favorite food?")
+                        .font(.headline)
+                        .padding()
+                }
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 20).fill(.regularMaterial))
+                Spacer()
+            }
+            .padding()
+        }
     }
 }
 
@@ -19,6 +43,7 @@ struct ARViewContainer: UIViewRepresentable {
     var arViewModel: ARViewModel
     
     func makeUIView(context: Context) -> ARView {
+        arViewModel.startSessionDelegate()
         return arViewModel.arView
     }
     
